@@ -1,12 +1,14 @@
 {% extends "main_page.html" %}
 
 {% block content %}
-    {% for entry in entries %}
+    {% for week in stats %}
         <div style="border: 3px black solid; margin: 1%">
-            <p>Date - {{ entry.date }}</p>
-            <p>Distance - {{ entry.distance }} km</p>
-            <p>Duration - {{ entry.duration }} minutes</p>
-            <a href="{% url 'entries:delete_entry' entry.id %}">Delete entry</a>
+            <p>Week number - {{ week.week }}</p>
+            <p>Entries - {{ week.number }}</p>
+            <p>Total distance - {{ week.distance }} km</p>
+            <p>Total duration - {{ week.duration }} minutes</p>
+            <p>Average speed - {{ week.average }} m/s</p>
+{#            <a href="{% url 'entries:delete_entry' entry.id %}">Delete entry</a>#}
         </div>
     {% endfor %}
 

@@ -57,13 +57,21 @@ def statistics(request):
     current_year = datetime.date.today().year
     start = datetime.date(current_year - 1, 1, 1)
     end = datetime.date(current_year, 1, 1)
-    last_year_entries = Entry.objects.filter(date__gte=start, date__lt=end)
+    last_year_entries = Entry.objects.filter(owner=request.user, date__gte=start, date__lt=end).order_by("date")
     stats = []
     current_week = 1
-    for i in range(last_year_entries):
-        isodata = last_year_entries[i].date.isocalendar()
-        year = isodata[0], week = isodata[1]
+    for entry in last_year_entries:
+        isodata = entry.date.isocalendar()
+        year = isodata[0]
+        week = isodata[1]
         if (current_week < week):
-            pass
+            stats.append({"week": week, "distance": entry.distance, "duration": entry.duration, "number": 1})
+            current_week = week
+        else:
+            stats[len(stats) - 1]["distance"] += entry.distance
+            stats[len(stats) - 1]["duration"] += entry.duration
+            stats[len(stats) - 1]["number"] += 1
+    for i in range(len(stats)):
+        stats[i]["average"] = round((stats[i]["distance"] * 1000) / (stats[i]["duration"] * 60), 2)
     print(stats)
-    return render(request, "statistics.html", {"entries": last_year_entries})
+    return render(request, "statistics.html", {"stats": stats})
