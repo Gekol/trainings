@@ -1,0 +1,23 @@
+{% extends "main_page.html" %}
+{% block content %}
+<p><a href="add_entry">Add new entry</a></p>
+{% if not added %}
+    <p>You haven't added any entries yet!</p>
+{% else %}
+    <form action="/entries" method="get">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Filter</button>
+    </form>
+    <p>Average speed - {{ average }} m/s</p>
+    {% for entry in entries %}
+        <div style="border: 3px black solid; margin: 1%">
+            <p>Date - {{ entry.date }}</p>
+            <p>Distance - {{ entry.distance }} km</p>
+            <p>Duration - {{ entry.duration }} minutes</p>
+            <a href="{% url 'entries:delete_entry' entry.id %}">Delete entry</a>
+        </div>
+    {% endfor %}
+    <script></script>
+{% endif %}
+{% endblock %}

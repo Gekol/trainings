@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Main</title>
+</head>
+<body>
+    <a href="/">Main</a>
+    {% if user.is_authenticated %}
+        <a href="/entries">Entries</a>
+        <a href="/statistics">Statistics</a>
+        <a href="/users/logout">Log out</a>
+        <span>Hello, {{ user.username }}</span>
+    {% else %}
+        <a href="/users/login">Log in</a>
+        <a href="/users/register">Register</a>
+    {% endif %}
+    {% block content %}
+        <h4>Hello, guys!!!</h4>
+        <p>Welcome to application "My JoggingPal". Here you can log all your jogging trainings and analyze it. Before using, please register.</p>
+    {% endblock %}
+</body>
+</html>

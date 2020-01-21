@@ -1,0 +1,13 @@
+{% extends "main_page.html" %}
+
+{% block content %}
+    {% for entry in entries %}
+        <div style="border: 3px black solid; margin: 1%">
+            <p>Date - {{ entry.date }}</p>
+            <p>Distance - {{ entry.distance }} km</p>
+            <p>Duration - {{ entry.duration }} minutes</p>
+            <a href="{% url 'entries:delete_entry' entry.id %}">Delete entry</a>
+        </div>
+    {% endfor %}
+
+{%  endblock %}
