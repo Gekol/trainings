@@ -11,6 +11,9 @@ class EntryForm(forms.ModelForm):
             "distance": "Enter the distance(in km)",
             "duration": "Enter the duration(in minutes)"
         }
+    def __init__(self, *args, **kwargs):
+        super(EntryForm, self).__init__(*args, **kwargs)
+        self.fields["date"].widget.attrs.update({"class": "datepicker"})
 
         # widgets = {
         #     "date": forms.DateField(attrs={'placeholder': 'Enter the date'}),

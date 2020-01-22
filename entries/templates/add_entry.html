@@ -1,24 +1,33 @@
 {% extends "main_page.html" %}
-{% load crispy_forms_tags %}
 {% block title %}Add entry{% endblock %}
 {% block content %}
-    <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-8">
-                    <form action="" method="post">
-                        {% csrf_token %}
-                        {% for field in form %}
-                            <p>
-                                {{ field.label }}
-                                {{ field }}
-                                {% if field.errors %}
-                                    {{ field.errors }}
-                                {% endif %}
-                            </p>
-                        {% endfor %}
-                        <button type="submit" class="btn btn-success">Add new entry</button>
-                    </form>
+    <div class="col-8">
+        <form action="" method="post">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="row">
+                    <div class="col-1">
+                        {{ field.label }}
+                    </div>
+                    <div class="col-1">
+                        {{ field }}
+                    </div>
+                    {% if field.errors %}
+                        {{ field.errors }}
+                    {% endif %}
                 </div>
-            </div>
+            {% endfor %}
+            <button type="submit" class="btn btn-success" style="margin-top: 1%">Add new entry</button>
+        </form>
     </div>
+{% endblock %}
+
+{% block js %}
+    <script>
+        jQuery( document ).ready(function() {
+            jQuery('.datepicker').datepicker({
+                format: 'yyyy-mm-dd',
+            });
+        });
+    </script>
 {% endblock %}
