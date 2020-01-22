@@ -1,10 +1,24 @@
 {% extends "main_page.html" %}
-
+{% load crispy_forms_tags %}
+{% block title %}Add entry{% endblock %}
 {% block content %}
-
-    <form action="" method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Add new entry</button>
-    </form>
+    <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-8">
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        {% for field in form %}
+                            <p>
+                                {{ field.label }}
+                                {{ field }}
+                                {% if field.errors %}
+                                    {{ field.errors }}
+                                {% endif %}
+                            </p>
+                        {% endfor %}
+                        <button type="submit" class="btn btn-success">Add new entry</button>
+                    </form>
+                </div>
+            </div>
+    </div>
 {% endblock %}

@@ -1,15 +1,22 @@
 {% extends "main_page.html" %}
-
+{% block title %}Statistics{% endblock %}
 {% block content %}
-    {% for week in stats %}
-        <div style="border: 3px black solid; margin: 1%">
-            <p>Week number - {{ week.week }}</p>
-            <p>Entries - {{ week.number }}</p>
-            <p>Total distance - {{ week.distance }} km</p>
-            <p>Total duration - {{ week.duration }} minutes</p>
-            <p>Average speed - {{ week.average }} m/s</p>
-{#            <a href="{% url 'entries:delete_entry' entry.id %}">Delete entry</a>#}
+    <h2>Statistics for {{ year }}</h2>
+    {% if stats|length > 0 %}
+        <div class="row">
+            {% for week in stats %}
+                <div class="col-md-2" style="border: 3px black solid; margin: 1%; padding: 1%">
+                    <p>Week number - {{ week.week }}</p>
+                    <p>Entries - {{ week.number }}</p>
+                    <p>Total distance - {{ week.distance }} km</p>
+                    <p>Total duration - {{ week.duration }} minutes</p>
+                    <p>Average speed - {{ week.average }} m/s</p>
+            {#            <a href="{% url 'entries:delete_entry' entry.id %}">Delete entry</a>#}
+                </div>
+            {% endfor %}
         </div>
-    {% endfor %}
+    {% else %}
+        <h6>There are no entries for {{ year }}</h6>
+    {% endif %}
 
 {%  endblock %}

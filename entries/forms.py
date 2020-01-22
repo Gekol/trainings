@@ -19,5 +19,5 @@ class EntryForm(forms.ModelForm):
         # }
 
 class FilterForm(forms.Form):
-    date_from = forms.DateField(label="From")
-    date_to = forms.DateField(label="To")
+    date_from = forms.DateField(label="From", help_text="Enter the date(yyyy-mm-dd)", widget=forms.TextInput(attrs={"class": "datepicker"}))
+    date_to = forms.DateField(label="To", help_text="Enter the date(yyyy-mm-dd)", widget=forms.TextInput(attrs={"class": "datepicker"}))

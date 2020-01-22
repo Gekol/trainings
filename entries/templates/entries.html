@@ -1,23 +1,47 @@
 {% extends "main_page.html" %}
+{% block title %}Dashboard{% endblock %}
 {% block content %}
 <p><a href="add_entry">Add new entry</a></p>
 {% if not added %}
     <p>You haven't added any entries yet!</p>
 {% else %}
-    <form action="/entries" method="get">
+    <h4>Filter entries by date</h4>
+    <form id="filter" action="/entries" method="get">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Filter</button>
-    </form>
-    <p>Average speed - {{ average }} m/s</p>
-    {% for entry in entries %}
-        <div style="border: 3px black solid; margin: 1%">
-            <p>Date - {{ entry.date }}</p>
-            <p>Distance - {{ entry.distance }} km</p>
-            <p>Duration - {{ entry.duration }} minutes</p>
-            <a href="{% url 'entries:delete_entry' entry.id %}">Delete entry</a>
+        {% for field in form %}
+            <div class="form-group">
+                {{ field.label }}
+                {{ field }}
+                {{ field.help_text }}
+                {% for err in field.errors %}
+                    {{ err }}
+                {% endfor %}
+            </div>
+        {% endfor %}
+        <button type="submit" class="btn btn-primary">Filter</button>
+        </form>
+    <div class="container">
+        <h2>Average speed - {{ average }} m/s</h2>
+        <div class="row" style="padding: 1%">
+            {% for entry in entries %}
+                <div class="col-md-2" style="border: 3px black solid; margin: 1%;">
+                    <p>Date - {{ entry.date }}</p>
+                    <p>Distance - {{ entry.distance }} km</p>
+                    <p>Duration - {{ entry.duration }} minutes</p>
+                    <a href="{% url 'entries:delete_entry' entry.id %}">Delete entry</a>
+                </div>
+            {% endfor %}
         </div>
-    {% endfor %}
-    <script></script>
+    </div>
 {% endif %}
+{% endblock %}
+
+{% block js %}
+    <script>
+        jQuery( document ).ready(function() {
+            jQuery('.datepicker').datepicker({
+                format: 'yyyy-mm-dd',
+            });
+        });
+    </script>
 {% endblock %}

@@ -1,0 +1,25 @@
+{% extends "main_page.html" %}
+{% block title %}View users{% endblock %}
+{% block content %}
+    <div class="container"><a href="new_user">Add user</a></div>
+    {% for current_user in users %}
+        <div class="container">
+            <div class="row" style="margin: 1%">
+                <div class="col-md-8"><span style="font-size: 25px">{{ current_user }}</span></div>
+                <div class="col-md-2">
+                    <a href="{% if current_user.is_active %}deactivate/{{ current_user.username }}{% else %}activate/{{ current_user.username }}{% endif %}" style="font-size: 25px">
+                        {% if current_user.is_active %} Deactivate {% else %} Activate {% endif %}
+                    </a>
+                </div>
+{#                {% if user.is_superuser %}#}
+{#                    <div class="col-md-1">#}
+{#                        <a href="{{ current_user.username }}/entries">View entries</a>#}
+{#                    </div>#}
+{#                {% endif %}#}
+                <div class="col-md-1">
+                    <a href="{{ current_user.username }}/password">Change password</a>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

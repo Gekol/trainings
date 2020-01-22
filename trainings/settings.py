@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'entries',
     'users',
+    'social_django',
 ]
 
 MIDDLEWARE = [
@@ -102,6 +103,11 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'social_core.backends.facebook.FacebookOAuth2',
+
+)
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
@@ -116,8 +122,17 @@ USE_L10N = True
 
 USE_TZ = True
 
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+SOCIAL_AUTH_FACEBOOK_KEY = 2433232410261950        # App ID
+SOCIAL_AUTH_FACEBOOK_SECRET = "5df60cda610fc5f6315946fc9f6734fb"  # App Secret
+
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_URL = 'logout'
+LOGOUT_REDIRECT_URL = 'login'
